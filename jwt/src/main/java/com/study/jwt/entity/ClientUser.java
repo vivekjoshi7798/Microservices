@@ -1,8 +1,9 @@
-package com.study.security.entity;
+package com.study.jwt.entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,9 +12,10 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name="users_auth")
+@Table(name = "Client_User")
 @Data
-public class UserAuthEntity implements UserDetails {
+@ToString
+public class ClientUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,27 +26,16 @@ public class UserAuthEntity implements UserDetails {
 
     @Column(nullable = false)
     private String password;
+
     private String role;
 
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
-    }
-
-    @Override
-    public @Nullable String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
+        return List.of( new SimpleGrantedAuthority(role));
     }
 
     @Override
